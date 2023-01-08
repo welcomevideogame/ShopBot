@@ -1,4 +1,5 @@
 from items import StoreItems
+import os
 
 class Utilities:
 
@@ -17,3 +18,17 @@ class Utilities:
             return int(value)
         except ValueError:
             return None
+
+    @classmethod
+    def save_to_csv(cls, filename: str, data: list[StoreItems]):
+        cls.check_for_exports()
+        with open(f"exports/{filename}.csv", "w") as file:
+            file.write("Name,Price,Brand,Category,Store Only,Inventory")
+            for item in data:
+                file.write(f"\n{item.get_name()},{item.get_price()},{item.get_brand()},{item.get_category()},{item.get_storeOnly()},{item.get_inventory()}")
+
+
+    @staticmethod
+    def check_for_exports():
+        if not os.path.exists("exports"):
+            os.makedirs("exports")

@@ -24,6 +24,10 @@ def main():
                 else:
                     break
             mc_scraper.print_items(options)
+            save = input("Save to csv? (y/n): ").upper()
+            if save == "Y":
+                filename = input("Enter a filename: ")
+                Utilities.save_to_csv(filename, mc_scraper.products)
             mc_scraper.clear_items()
         elif url == "0":
             break
