@@ -43,4 +43,4 @@ class StoreItems():
         self.storeOnly = storeOnly
     
     def __str__(self):
-        return f"Name: {self.name}, Price: {self.price}, Brand: {self.brand}, Category: {self.category}, Store Only: {self.storeOnly}, Inventory: {self.inventory}"
+        return f"Name: {self.name}\n\tPrice: {self.price}\n\tBrand: {self.brand}\n\tCategory: {self.category}\n\tStore Only: {self.storeOnly}\n\tInventory: {self.inventory}"

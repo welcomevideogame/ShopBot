@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from items import StoreItems
+from utilities import Utilities
 
 class Scraper:
 
@@ -42,8 +43,14 @@ class Scraper:
                 return False, 0
                 
 
-        def print_items(self):
+        def print_items(self, options):
+            if options["Filter out store only"]:
+                self.products = [product for product in self.products if not product.get_storeOnly()]
+            if options["Sort by price"]:
+                Utilities.sort_by_price(self.products)
             for product in self.products:
                 print(product)
 
+        def clear_items(self):
+            self.products.clear()
     
