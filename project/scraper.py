@@ -48,6 +48,8 @@ class Scraper:
                 self.products = [product for product in self.products if not product.get_storeOnly()]
             if options["Sort by price"]:
                 Utilities.sort_by_price(self.products)
+            if options["Simple view"]:
+                self.products = Utilities.clean_item_name(self.products)
             for product in self.products:
                 print(product)
 
