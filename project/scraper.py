@@ -57,8 +57,9 @@ class Scraper:
                 storeOnly, inventory = self.clean_stock_string(item)
                 div = item.find("div", class_="h2")
                 a = div.find('a')
-                name, price, brand, category = a['data-name'], a['data-price'], a['data-brand'], a['data-category']
-                item_obj = StoreItems(name, price, brand, category, storeOnly, inventory)
+                name, price, brand, category, id = a['data-name'], a['data-price'], a['data-brand'], a['data-category'], a['data-id']
+                link = Utilities.make_product_link(name, id)
+                item_obj = StoreItems(name, price, brand, category, storeOnly, inventory, id, link)
                 self.products.append(item_obj)
         
         def clean_stock_string(self, item):
@@ -71,7 +72,7 @@ class Scraper:
             else:
                 return False, 0
 
-        def print_items(self, options):
+        def print_items(self, options, brands):
             if options["Filter out store only"]:
                 self.products = [product for product in self.products if not product.get_storeOnly()]
             if options["Filter out of stock"]:
@@ -80,9 +81,20 @@ class Scraper:
                 Utilities.sort_by_price(self.products)
             if options["Simple view"]:
                 self.products = Utilities.clean_item_name(self.products)
+            if options["Filter brands"]:
+                self.products = [product for product in self.products if product.get_brand() in brands]
             for product in self.products:
                 print(product)
+        
+        def get_product_count(self):
+            return len(self.products)
 
         def clear_items(self):
             self.products.clear()
+
+        def get_brands(self):
+            brand_set = set()
+            for product in self.products:
+                brand_set.add(product.get_brand())
+            return brand_set
     

@@ -45,3 +45,7 @@ class Utilities:
         name = product.get_name()
         elements = name.split(" ")
         product.set_name(f"{product.get_brand()} {elements[2]} {elements[3]}")
+
+    @staticmethod
+    def make_product_link(name, id):
+        return f"https://www.microcenter.com/product/{id}/{name}".replace(" ", "-").lower()
