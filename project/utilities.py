@@ -1,5 +1,6 @@
 from items import StoreItems
 import os
+import configparser
 
 class Utilities:
 
@@ -49,3 +50,12 @@ class Utilities:
     @staticmethod
     def make_product_link(name, id):
         return f"https://www.microcenter.com/product/{id}/{name}".replace(" ", "-").lower()
+
+    @staticmethod
+    def get_login_config():
+        config = configparser.ConfigParser()
+        config.read("./configuration/config.ini")
+        config_dict = {}
+        for key, value in config.items("login"):
+            config_dict[key] = value
+        return config_dict
