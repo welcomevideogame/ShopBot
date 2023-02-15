@@ -83,8 +83,8 @@ class Scraper:
                 self.products = Utilities.clean_item_name(self.products)
             if options["Filter brands"]:
                 self.products = [product for product in self.products if product.get_brand() in brands]
-            for product in self.products:
-                print(product)
+            for i, product in enumerate(self.products):
+                print(f"{i + 1}: {product}")
         
         def get_product_count(self):
             return len(self.products)

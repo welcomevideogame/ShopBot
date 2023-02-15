@@ -1,6 +1,7 @@
 from scraper import Scraper
 import os
 from utilities import Utilities
+from webbot import WebBot
 import string
 
 class App:
@@ -19,7 +20,7 @@ class App:
                 print("Url not supported.")
 
     def microcenter(self):
-        options = {"Sort by price": False, "Filter out store only": False, "Filter out of stock": False, "Filter brands": False, "Simple view": False, "Show warnings": True}
+        options = {"Sort by price": False, "Filter out store only": False, "Filter out of stock": False, "Filter brands": False, "Simple view": False, "Show warnings": True, "Buy Item": False}
         scraper = Scraper.MicroCenter()
         scraper.set_url(self.url)
         pagination = self.check_pagination()
@@ -66,6 +67,18 @@ class App:
         if save == "Y":
             filename = input("Enter a filename: ")
             Utilities.save_to_csv(filename, scraper.products)
+
+        if options["Buy Item"]:
+            choice = input("Enter the number of the item you want to buy: ")
+            if choice.isnumeric() and choice in range(len(scraper.products)):
+                print("Opening browser...")
+                bot = WebBot()
+                bot = bot.MicroCenterBot()
+                bot.go_to(scraper.products[choice + 1]["url"])
+            else:
+                input("Invalid choice.")
+
+
         scraper.clear_items()
 
     def check_pagination(self):
